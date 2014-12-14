@@ -29,13 +29,43 @@ body {
 	// the segmentsWidth, and the third argument is the segmentsHeight.  Increasing the
 	// segmentsWidth and segmentsHeight will yield a more perfect circle, but will degrade
 	// rendering performance
-	function genSphere(dest){
+
+
+	//function genSphere(dest){
+	function genSphere(dest, dx,dy,dz){
 		var sphere = new THREE.Mesh(new THREE.SphereGeometry(10, 100, 100), new THREE.MeshNormalMaterial());
 		dest.overdraw = true;
+		sphere.position.set(dx,dy,dz);
 		dest.add(sphere);
+		return sphere
 	}
 
-	genSphere(scene);
+	/*var sphere = function(sphere){
+		this.sphere = sphere;
+		this.update = function(){
+
+		}
+	}*/
+
+		sphere0 = genSphere(scene,5,20,0);
+		sphere0.position.set(20,-40,20);
+		//console.log(sphere.position.x);
+		//for (i = 0 ; i < 100; i++)
+
+
+
+
+		/*sphere1 = genSphere(scene,5,-20,0);
+		sphere2 = genSphere(scene,20,5,0);
+		sphere3 = genSphere(scene,-20,5,0);
+		scene.remove(sphere3);*/
+
+
+
+	/*for (i = 0; i < 5; i++)
+		{
+			genSphere(scene,x + 10*i,y + 10*i,z);
+		}*/
 
 	renderer.render(scene, camera);
 	</script>
