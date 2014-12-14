@@ -1,0 +1,186 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', '-g', 'spark-cli' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.33
+4 verbose cache add [ 'spark-cli', null ]
+5 verbose cache add name=undefined spec="spark-cli" args=["spark-cli",null]
+6 verbose parsed url { protocol: null,
+6 verbose parsed url   slashes: null,
+6 verbose parsed url   auth: null,
+6 verbose parsed url   host: null,
+6 verbose parsed url   port: null,
+6 verbose parsed url   hostname: null,
+6 verbose parsed url   hash: null,
+6 verbose parsed url   search: null,
+6 verbose parsed url   query: null,
+6 verbose parsed url   pathname: 'spark-cli',
+6 verbose parsed url   path: 'spark-cli',
+6 verbose parsed url   href: 'spark-cli' }
+7 silly lockFile 48577535-spark-cli spark-cli
+8 verbose lock spark-cli /Users/akivalipshitz/.npm/48577535-spark-cli.lock
+9 silly lockFile 48577535-spark-cli spark-cli
+10 silly lockFile 48577535-spark-cli spark-cli
+11 verbose addNamed [ 'spark-cli', '' ]
+12 verbose addNamed [ null, '*' ]
+13 silly lockFile ff8a5b61-spark-cli spark-cli@
+14 verbose lock spark-cli@ /Users/akivalipshitz/.npm/ff8a5b61-spark-cli.lock
+15 silly addNameRange { name: 'spark-cli', range: '*', hasData: false }
+16 verbose request where is /spark-cli
+17 verbose request registry https://registry.npmjs.org/
+18 verbose request id fa4238a3b69f3ede
+19 verbose url raw /spark-cli
+20 verbose url resolving [ 'https://registry.npmjs.org/', './spark-cli' ]
+21 verbose url resolved https://registry.npmjs.org/spark-cli
+22 verbose request where is https://registry.npmjs.org/spark-cli
+23 info trying registry request attempt 1 at 07:04:00
+24 http GET https://registry.npmjs.org/spark-cli
+25 http 200 https://registry.npmjs.org/spark-cli
+26 silly registry.get cb [ 200,
+26 silly registry.get   { date: 'Sun, 14 Dec 2014 12:04:01 GMT',
+26 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+26 silly registry.get     etag: '"AZ5G4X74Q2IO3P4JKFL4D1ZSJ"',
+26 silly registry.get     'content-type': 'application/json',
+26 silly registry.get     'cache-control': 'max-age=60',
+26 silly registry.get     'content-length': '48065',
+26 silly registry.get     'accept-ranges': 'bytes',
+26 silly registry.get     via: '1.1 varnish',
+26 silly registry.get     age: '0',
+26 silly registry.get     'x-served-by': 'cache-atl6232-ATL',
+26 silly registry.get     'x-cache': 'MISS',
+26 silly registry.get     'x-cache-hits': '0',
+26 silly registry.get     'x-timer': 'S1418558640.972586,VS0,VE450',
+26 silly registry.get     vary: 'Accept',
+26 silly registry.get     'keep-alive': 'timeout=10, max=50',
+26 silly registry.get     connection: 'Keep-Alive' } ]
+27 silly addNameRange number 2 { name: 'spark-cli', range: '*', hasData: true }
+28 silly addNameRange versions [ 'spark-cli',
+28 silly addNameRange   [ '0.2.2',
+28 silly addNameRange     '0.2.3',
+28 silly addNameRange     '0.2.4',
+28 silly addNameRange     '0.2.5',
+28 silly addNameRange     '0.2.6',
+28 silly addNameRange     '0.2.8',
+28 silly addNameRange     '0.2.9',
+28 silly addNameRange     '0.2.91',
+28 silly addNameRange     '0.2.92',
+28 silly addNameRange     '0.2.93',
+28 silly addNameRange     '0.2.94',
+28 silly addNameRange     '0.2.95',
+28 silly addNameRange     '0.2.96',
+28 silly addNameRange     '0.2.97',
+28 silly addNameRange     '0.2.98',
+28 silly addNameRange     '0.2.99',
+28 silly addNameRange     '0.3.0',
+28 silly addNameRange     '0.3.1',
+28 silly addNameRange     '0.3.2',
+28 silly addNameRange     '0.3.3',
+28 silly addNameRange     '0.3.4',
+28 silly addNameRange     '0.3.5',
+28 silly addNameRange     '0.3.6',
+28 silly addNameRange     '0.3.8',
+28 silly addNameRange     '0.3.9',
+28 silly addNameRange     '0.3.91',
+28 silly addNameRange     '0.3.92',
+28 silly addNameRange     '0.3.93',
+28 silly addNameRange     '0.3.94',
+28 silly addNameRange     '0.3.95',
+28 silly addNameRange     '0.3.96',
+28 silly addNameRange     '0.3.97',
+28 silly addNameRange     '0.3.98',
+28 silly addNameRange     '0.3.99',
+28 silly addNameRange     '0.4.0',
+28 silly addNameRange     '0.4.1',
+28 silly addNameRange     '0.4.4',
+28 silly addNameRange     '0.4.5',
+28 silly addNameRange     '0.4.6',
+28 silly addNameRange     '0.4.7',
+28 silly addNameRange     '0.4.8',
+28 silly addNameRange     '0.4.9' ] ]
+29 verbose addNamed [ 'spark-cli', '0.4.9' ]
+30 verbose addNamed [ '0.4.9', '0.4.9' ]
+31 silly lockFile 007a8e12-spark-cli-0-4-9 spark-cli@0.4.9
+32 verbose lock spark-cli@0.4.9 /Users/akivalipshitz/.npm/007a8e12-spark-cli-0-4-9.lock
+33 silly lockFile 6c783aee-rg-spark-cli-spark-cli-0-4-9-tgz https://registry.npmjs.org/spark-cli/-/spark-cli-0.4.9.tgz
+34 verbose lock https://registry.npmjs.org/spark-cli/-/spark-cli-0.4.9.tgz /Users/akivalipshitz/.npm/6c783aee-rg-spark-cli-spark-cli-0-4-9-tgz.lock
+35 verbose addRemoteTarball [ 'https://registry.npmjs.org/spark-cli/-/spark-cli-0.4.9.tgz',
+35 verbose addRemoteTarball   '2581d241430727419f6c85d8f3fe54cb7ad485c7' ]
+36 info retry fetch attempt 1 at 07:04:01
+37 verbose fetch to= /var/folders/jb/2pywh2b923774dfrfhdm2zg80000gn/T/npm-5194-BFPgx9Lm/registry.npmjs.org/spark-cli/-/spark-cli-0.4.9.tgz
+38 http GET https://registry.npmjs.org/spark-cli/-/spark-cli-0.4.9.tgz
+39 http 200 https://registry.npmjs.org/spark-cli/-/spark-cli-0.4.9.tgz
+40 silly lockFile 6c783aee-rg-spark-cli-spark-cli-0-4-9-tgz https://registry.npmjs.org/spark-cli/-/spark-cli-0.4.9.tgz
+41 silly lockFile 6c783aee-rg-spark-cli-spark-cli-0-4-9-tgz https://registry.npmjs.org/spark-cli/-/spark-cli-0.4.9.tgz
+42 silly lockFile 007a8e12-spark-cli-0-4-9 spark-cli@0.4.9
+43 silly lockFile 007a8e12-spark-cli-0-4-9 spark-cli@0.4.9
+44 silly lockFile ff8a5b61-spark-cli spark-cli@
+45 silly lockFile ff8a5b61-spark-cli spark-cli@
+46 silly resolved [ { name: 'spark-cli',
+46 silly resolved     description: 'Simple Node commandline application for working with your Spark Cores and using the Spark Cloud',
+46 silly resolved     version: '0.4.9',
+46 silly resolved     author: { name: 'David Middlecamp' },
+46 silly resolved     repository: { type: 'git', url: 'https://github.com/spark/spark-cli' },
+46 silly resolved     bin: { spark: './bin/spark.js' },
+46 silly resolved     main: './app.js',
+46 silly resolved     engines: { node: '*' },
+46 silly resolved     dependencies:
+46 silly resolved      { glob: '^4.2.1',
+46 silly resolved        'hogan.js': '~2.0.0',
+46 silly resolved        moment: '*',
+46 silly resolved        request: '2.46.0',
+46 silly resolved        serialport: '1.4.5',
+46 silly resolved        when: '*',
+46 silly resolved        xtend: '*' },
+46 silly resolved     contributors: [ [Object], [Object], [Object], [Object], [Object] ],
+46 silly resolved     preferGlobal: true,
+46 silly resolved     bugs: { url: 'https://github.com/spark/spark-cli/issues' },
+46 silly resolved     homepage: 'https://github.com/spark/spark-cli',
+46 silly resolved     _id: 'spark-cli@0.4.9',
+46 silly resolved     scripts: {},
+46 silly resolved     _shasum: '2581d241430727419f6c85d8f3fe54cb7ad485c7',
+46 silly resolved     _from: 'spark-cli@',
+46 silly resolved     _npmVersion: '1.4.21',
+46 silly resolved     _npmUser: { name: 'dmiddlecamp', email: 'david@spark.io' },
+46 silly resolved     maintainers: [ [Object] ],
+46 silly resolved     dist:
+46 silly resolved      { shasum: '2581d241430727419f6c85d8f3fe54cb7ad485c7',
+46 silly resolved        tarball: 'http://registry.npmjs.org/spark-cli/-/spark-cli-0.4.9.tgz' },
+46 silly resolved     directories: {},
+46 silly resolved     _resolved: 'https://registry.npmjs.org/spark-cli/-/spark-cli-0.4.9.tgz' } ]
+47 info install spark-cli@0.4.9 into /usr/local/lib
+48 info installOne spark-cli@0.4.9
+49 verbose lib/node_modules/spark-cli unbuild
+50 verbose tar unpack /Users/akivalipshitz/.npm/spark-cli/0.4.9/package.tgz
+51 silly lockFile 8392a0b0-local-lib-node-modules-spark-cli tar:///usr/local/lib/node_modules/spark-cli
+52 verbose lock tar:///usr/local/lib/node_modules/spark-cli /Users/akivalipshitz/.npm/8392a0b0-local-lib-node-modules-spark-cli.lock
+53 silly lockFile 466862d4--npm-spark-cli-0-4-9-package-tgz tar:///Users/akivalipshitz/.npm/spark-cli/0.4.9/package.tgz
+54 verbose lock tar:///Users/akivalipshitz/.npm/spark-cli/0.4.9/package.tgz /Users/akivalipshitz/.npm/466862d4--npm-spark-cli-0-4-9-package-tgz.lock
+55 silly gunzTarPerm modes [ '755', '644' ]
+56 error Error: EACCES, mkdir '/usr/local/lib/node_modules/spark-cli'
+56 error  { [Error: EACCES, mkdir '/usr/local/lib/node_modules/spark-cli']
+56 error   errno: 3,
+56 error   code: 'EACCES',
+56 error   path: '/usr/local/lib/node_modules/spark-cli',
+56 error   fstream_type: 'Directory',
+56 error   fstream_path: '/usr/local/lib/node_modules/spark-cli',
+56 error   fstream_class: 'DirWriter',
+56 error   fstream_stack:
+56 error    [ '/usr/local/lib/node_modules/npm/node_modules/fstream/lib/dir-writer.js:36:23',
+56 error      '/usr/local/lib/node_modules/npm/node_modules/mkdirp/index.js:46:53',
+56 error      'Object.oncomplete (fs.js:107:15)' ] }
+57 error Please try running this command again as root/Administrator.
+58 error System Darwin 14.0.0
+59 error command "node" "/usr/local/bin/npm" "install" "-g" "spark-cli"
+60 error cwd /Users/akivalipshitz/Developer/Code/Hackathonukah_2014
+61 error node -v v0.10.33
+62 error npm -v 1.4.28
+63 error path /usr/local/lib/node_modules/spark-cli
+64 error fstream_path /usr/local/lib/node_modules/spark-cli
+65 error fstream_type Directory
+66 error fstream_class DirWriter
+67 error code EACCES
+68 error errno 3
+69 error stack Error: EACCES, mkdir '/usr/local/lib/node_modules/spark-cli'
+70 error fstream_stack /usr/local/lib/node_modules/npm/node_modules/fstream/lib/dir-writer.js:36:23
+70 error fstream_stack /usr/local/lib/node_modules/npm/node_modules/mkdirp/index.js:46:53
+70 error fstream_stack Object.oncomplete (fs.js:107:15)
+71 verbose exit [ 3, true ]

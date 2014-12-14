@@ -17,7 +17,7 @@ io.on('error', function(data) {
 
 
 io.on('connect', function(socket) {
-	
+	io.on
 })
 
 

@@ -38,7 +38,7 @@
     	.Score{
     		position: center;
     		 font-family:"Helvetica";
-    		font-size:30px;	
+    		font-size:30px;
     		float: left;
     	}
     	#canvasDiv {
@@ -90,14 +90,14 @@
     </style>
   </head>
   <body>
-  	
+
   	<div class = "scoreContainer">
   		<div class = "Score" id = "playerScore">
   		</div>
   		<div id = "scoreDivider">
   		</div>
   		<div class = "Score" id = "computerScore">
-  		</div>  	
+  		</div>
   	</div>
 
   	<div id = "canvasDiv">
@@ -122,9 +122,6 @@
 </head>
 <body>
 <script>
-
-
-
 
 
 function map(num,rang1Start,rang1End,rang2Start,rang2End) {
@@ -165,7 +162,7 @@ score = {
 }
 /**
  * The player paddle
- * 
+ *
  * @type {Object}
  */
 player = {
@@ -194,7 +191,7 @@ player = {
 },
 /**
  * The ai paddle
- * 
+ *
  * @type {Object}
  */
 ai = {
@@ -220,9 +217,9 @@ ai = {
 		ctx.fillRect(this.x, this.y, this.width, this.height);
 	}
 },
-/**	
+/**
  * The ball object
- * 
+ *
  * @type {Object}
  */
 ball = {
@@ -238,7 +235,7 @@ ball = {
 	  var formData = new FormData();
 	  var xhr = new XMLHttpRequest();
 	  xhr.open("PUT", "http://" + ip + "/api/newdeveloper/lights/" + lightNumber + "/state", true);
-	  xhr.send(JSON.stringify({on: true, sat: sat, bri : bri, hue :hue }));
+	  xhr.send(JSON.stringify({transition:0, sat: sat, bri : bri, hue :hue }));
 	},
 
 
@@ -256,7 +253,7 @@ ball = {
 
 	/**
 	 * Serves the ball towards the specified side
-	 * 
+	 *
 	 * @param  {number} side 1 right
 	 *                       -1 left
 	 */
@@ -304,8 +301,8 @@ ball = {
 		var pdle = this.vel.x < 0 ? player : ai;
 		if (AABBIntersect(pdle.x, pdle.y, pdle.width, pdle.height,
 				this.x, this.y, this.side, this.side))
-		{	
-			this.randomHue(); 
+		{
+			this.randomHue();
 
 			// set the x position and calculate reflection angle
 			this.x = pdle===player ? player.x+player.width : ai.x - this.side;
@@ -347,14 +344,14 @@ ball = {
 								ctx.stroke();
 
 
-			}    
+			}
 
 		}
 	}
 };
 
 /*
- * The Socket connection being initialized here. 
+ * The Socket connection being initialized here.
 */
 var socket = io('http://127.0.0.1:9000');
 
@@ -364,7 +361,7 @@ socket.on('imu', function(data) {
 	desY = yPos * 0.2;
 	player.deltaY = desY;
 });
- 
+
 socket.on('fist', function(data){
 	console.log('You made a fist');
 	paused = !paused;
