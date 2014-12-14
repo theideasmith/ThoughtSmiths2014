@@ -152,6 +152,7 @@ DownArrow = 40,
  * Game elements
  */
 canvas,
+paused = false,
 ctx,
 keystate,
 score = {
@@ -249,7 +250,7 @@ ball = {
 			var sat = thisColor.s * 5;
 			var bri = thisColor.b * 2;
 			var hue = thisColor.h * 100;
-			changeHueColor("192.168.1.134", c + 1, sat, bri, hue);
+			this.changeHueColor("192.168.1.134", c + 1, sat, bri, hue);
 		}
 	},
 
@@ -280,7 +281,6 @@ ball = {
 		var positions = this.positions;
 		if (positions.length == this.numPoints) positions.pop();
 		else positions.unshift(new Scalar(this.x,this.y))
-		console.log(positions[0].x);
 
 		// update position with current velocity
 		this.x += this.vel.x;
@@ -365,6 +365,10 @@ socket.on('imu', function(data) {
 	player.deltaY = desY;
 });
  
+socket.on('fist', function(data){
+	console.log('You made a fist');
+	paused = !paused;
+});
 
 /**
  * Starts the game
@@ -407,10 +411,12 @@ function init() {
  * Update all game objects
  */
 function update() {
-	ball.update();
-	player.update();
-	ai.update();
-	score.update();
+	if (!paused) {
+		ball.update();
+		player.update();
+		ai.update();
+		score.update();
+	}
 }
 /**
  * Clear canvas and draw all game objects and net

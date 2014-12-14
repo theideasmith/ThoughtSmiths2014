@@ -9,6 +9,7 @@ register('arm_lost');
 register('imu');
 register('lock');
 register('unlock');
+register('fist');
 
 io.on('error', function(data) {
 	console.log(data);
@@ -16,10 +17,7 @@ io.on('error', function(data) {
 
 
 io.on('connect', function(socket) {
-	socket.on('vibrate', function() {
-		controller.vibrate();
-		console.log('test');
-	});
+	
 })
 
 
