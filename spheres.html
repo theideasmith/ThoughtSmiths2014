@@ -7,11 +7,27 @@ body {
 	padding: 0px;
 }
 </style>
+	<script src="https://cdn.socket.io/socket.io-1.2.1.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="./please.js"></script>
+	<script src="./colz.min.js"></script>
 </head>
 <body>
 	<div id="container"></div>
 	<script src="./three.min.js"></script>
-	<script defer="defer">
+	<script type = 'text/javascript'>
+
+var scalar = function(x,y,z){
+		this.x = 0;
+		this.y = 0;
+		this.z = 0;
+};
+
+function isFuzzyFrom(num, dist, fromThis) {
+	returned Math.abs(num - fromThis) <= dist ? true : false;
+	return returned;
+}
+
 	// renderer
 	var renderer = new THREE.WebGLRenderer();
 	renderer.setSize(window.innerWidth, window.innerHeight);
@@ -41,22 +57,26 @@ body {
 	}
 
 
-		sphere0 = genSphere(scene,0,0,0);
+	var Sphere = function(dest, radius, dx,dy,dz){
+		this.pos = new Scalar(dx,dy,dz);
+		var dirX = isFuzzyFrom(dx, 30, 0) ? 1 : -1;
+		var dirY = isFuzzyFrom(dy, 30, 0) ? 1 : -1;
 
-		/*sphere1 = genSphere(scene,5,-20,0);
-		sphere2 = genSphere(scene,20,5,0);
-		sphere3 = genSphere(scene,-20,5,0);
-		scene.remove(sphere3);*/
+		this.vel = new Scalar(Math.random()*window.innerWidth,Math.random()*window.innerWidth,Math.random()* 200) ;
+		this.init = function (dest, dx,dy,dz){
+			var sphere = new THREE.Mesh(new THREE.SphereGeometry(, 100, 100), new THREE.MeshNormalMaterial());
+			dest.overdraw = true;
+			sphere.position.set(dx,dy,dz);
+			dest.add(sphere);
+			return sphere;
+		};
 
-		//var directionx = 1;
-		//var directiony = 1;
-		var directionz = 1;
-
-		var render = function () {
+		this.radius = radius;
+		this.update = function(){
 			requestAnimationFrame( render );
 
-			sphere0.position.z +=directionz * 2;
-			if (sphere0.position.z == 200)
+			this.pos.z +=directionz * 2;
+			if (this.pos.z == 200)
 			{
 
 				randomDirectionx = Math.floor(Math.random() * 2) + 1;
@@ -73,18 +93,88 @@ body {
 					randomDirectiony = 1;
 
 				//scene.remove(sphere0);
-				sphere0.position.z = 0;
-				sphere0.position.y = randomDirectionx*(Math.floor(Math.random() * 40) + 1);
-				sphere0.position.x = randomDirectiony*(Math.floor(Math.random() * 40) + 1);
+				this.pos.z = 0;
+				this.pos.y = randomDirectionx*(Math.floor(Math.random() * 40) + 1);
+				this.pos.x = randomDirectiony*(Math.floor(Math.random() * 40) + 1);
+		};
+		this.remove(scene){
+			scene.remove(this);
+		};
+	};
+
+	//function genSphere(dest){
+
+	/*
+	* The Socket connection being initi;alized here.
+	*/
+	var socket = io('http://127.0.0.1:9000');
+
+	socket.on('imu', function(data) {
+		scalar.x = data.gyroscope.x;
+		scalar.y = data.gyroscope.y;
+		scalar.z = data.gyroscope.z;
+		player.deltaY = desY;
+	});
+
+socket.on('fist', function(data){
+		console.log('You made a fist');
+});
+
+	/*var sphere = function(sphere){
+		this.sphere = sphere;
+		this.update = function(){
+
 		}
+	}*/
+		for (i = 0; i < 30; i++)
+			{
+				new Sphere(dest, dx,dy,dz);
+			}
 
-			//sphere0.position.x +=directionx * 1;
-			//sphere0.position.y +=directiony * 1;
+		/*sphere1 = genSphere(scene,5,-20,0);
+		sphere2 = genSphere(scene,20,5,0);
+		sphere3 = genSphere(scene,-20,5,0);
+		scene.remove(sphere3);*/
 
-			/*if (sphere0.position.x > 50 || sphere0.position.x < -50)
-				directionx *= -1;
-			else if(sphere0.position.y > 50 || sphere0.position.y < -50)
-				directiony *= -1;*/
+		//var directionx = 1;
+		//var directiony = 1;
+		var directionz = 1;
+		var numSpheres = 0;
+		var spheres = new Array;
+
+		var render = function () {
+			requestAnimationFrame( render );
+		//
+		// 	sphere0.position.z +=directionz * 2;
+		// 	if (sphere0.position.z == 200)
+		// 	{
+		//
+		// 		randomDirectionx = Math.floor(Math.random() * 2) + 1;
+		// 		randomDirectiony = Math.floor(Math.random() * 2) + 1;
+		//
+		// 		if (randomDirectionx%2 == 0)
+		// 			randomDirectionx = -1;
+		// 		else
+		// 			randomDirectionx = 1;
+		//
+		// 		if (randomDirectiony%2 == 0)
+		// 			randomDirectiony = -1;
+		// 		else
+		// 			randomDirectiony = 1;
+		//
+		// 		//scene.remove(sphere0);
+		// 		sphere0.position.z = 0;
+		// 		sphere0.position.y = randomDirectionx*(Math.floor(Math.random() * 40) + 1);
+		// 		sphere0.position.x = randomDirectiony*(Math.floor(Math.random() * 40) + 1);
+		// }
+		//
+		// 	//sphere0.position.x +=directionx * 1;
+		// 	//sphere0.position.y +=directiony * 1;
+		//
+		// 	/*if (sphere0.position.x > 50 || sphere0.position.x < -50)
+		// 		directionx *= -1;
+		// 	else if(sphere0.position.y > 50 || sphere0.position.y < -50)
+		// 		directiony *= -1;*/
 
 			renderer.render(scene, camera);
 		};

@@ -87,6 +87,10 @@
     	#x, #y, #z {
     		height: 50px;
     	}
+
+			#winDiv {
+				font-family:'Helvetica';
+			}
     </style>
   </head>
   <body>
@@ -101,6 +105,9 @@
   	</div>
 
   	<div id = "canvasDiv">
+			<div id = "winDiv" style = "display:none">
+				<p id ='winText'></p>
+			</div>
   	</div>
 
 	<style>
@@ -142,6 +149,8 @@ var
  */
 WIDTH  = 700,
 HEIGHT = 600,
+PLAYER_COLOR_STANDARD = '#1976D2',
+AI_COLOR_STANDARD = '#F4511E',
 pi = Math.PI,
 UpArrow   = 38,
 DownArrow = 40,
@@ -186,7 +195,10 @@ player = {
 	 * Draw the player paddle to the canvas
 	 */
 	draw: function() {
+		var prev = ctx.fillStyle;
+		ctx.fillStyle = "#1976D2";
 		ctx.fillRect(this.x, this.y, this.width, this.height);
+		ctx.fillStyle = prev;
 	}
 },
 /**
@@ -214,7 +226,12 @@ ai = {
 	 * Draw the ai paddle to the canvas
 	 */
 	draw: function() {
+		var prev = ctx.fillStyle;
+		ctx.fillStyle = "#F4511E";
 		ctx.fillRect(this.x, this.y, this.width, this.height);
+		ctx.fillStyle = prev;
+
+
 	}
 },
 /**
@@ -230,7 +247,7 @@ ball = {
 	vel: null,
 	side:  20,
 	speed: 12,
-
+	ip: '192.168.1.134',
 	changeHueColor : function(ip, lightNumber, sat, bri, hue) {
 	  var formData = new FormData();
 	  var xhr = new XMLHttpRequest();
@@ -238,12 +255,64 @@ ball = {
 	  xhr.send(JSON.stringify({transition:0, sat: sat, bri : bri, hue :hue }));
 	},
 
+  initHueColors : function() {
+		this.changeHueColor("192.168.1.134", 1, 167, 40, 46920);
+		this.changeHueColor("192.168.1.134", 2, 0, 0, 0);
+		this.changeHueColor("192.168.1.134", 3, 267, 132, 0);
+	},
 
+	winningColors : function(winner) {
+		if(winner === "player") {
+			this.changeHueColor("192.168.1.134", 1, 167, 167, 46920);
+			this.changeHueColor("192.168.1.134", 2, 167, 167, 46920);
+			this.changeHueColor("192.168.1.134", 3, 167, 167, 46920);
+			setTimeout(function() {
+				this.changeHueColor("192.168.1.134", 1, 1, 1, 1);
+				this.changeHueColor("192.168.1.134", 2, 1, 1, 1);
+				this.changeHueColor("192.168.1.134", 3, 1, 1, 1);
+			}, 100);
+			setTimeout(function() {
+				this.changeHueColor("192.168.1.134", 1, 167, 167, 46920);
+				this.changeHueColor("192.168.1.134", 2, 167, 167, 46920);
+				this.changeHueColor("192.168.1.134", 3, 167, 167, 46920);
+			}, 200);
+			setTimeout(function() {
+				this.initHueColors();
+			}, 400);
+		}
+		else {
+			this.changeHueColor("192.168.1.134", 1, 267, 132, 0);
+			this.changeHueColor("192.168.1.134", 2, 267, 132, 0);
+			this.changeHueColor("192.168.1.134", 3, 267, 132, 0);
+			setTimeout(function() {
+				this.changeHueColor("192.168.1.134", 1, 1, 1, 1);
+				this.changeHueColor("192.168.1.134", 2, 1, 1, 1);
+				this.changeHueColor("192.168.1.134", 3, 1, 1, 1);
+			}, 100);
+			setTimeout(function() {
+				this.changeHueColor("192.168.1.134", 1, 267, 132, 0);
+				this.changeHueColor("192.168.1.134", 2, 267, 132, 0);
+				this.changeHueColor("192.168.1.134", 3, 267, 132, 0);
+			}, 200);
+			setTimeout(function() {
+				this.initHueColors();
+			}, 400);
+		}
+	},
 
 	randomHue : function() {
 		var colors = Please.make_color({colors_returned: 3 });
 		for(var c = 0; c < colors.length; c++) {
 			var thisColor = new colz.Color(colors[c]);
+			var sat = thisColor.s * 5;
+			var bri = thisColor.b * 2;
+			var hue = thisColor.h * 100;
+			this.changeHueColor("192.168.1.134", c + 1, sat, bri, hue);
+		}
+	},
+	scoreHue : function(color) {
+		var thisColor = new colz.Color(color);
+		for(var c = 0; c < 3; c++) {
 			var sat = thisColor.s * 5;
 			var bri = thisColor.b * 2;
 			var hue = thisColor.h * 100;
@@ -302,7 +371,7 @@ ball = {
 		if (AABBIntersect(pdle.x, pdle.y, pdle.width, pdle.height,
 				this.x, this.y, this.side, this.side))
 		{
-			this.randomHue();
+
 
 			// set the x position and calculate reflection angle
 			this.x = pdle===player ? player.x+player.width : ai.x - this.side;
@@ -317,8 +386,17 @@ ball = {
 		// x direction
 		if (0 > this.x+this.side || this.x > WIDTH) {
 			socket.emit('vibrate');
-			if (pdle ===player) score.player++;
-			else score.computer++;
+			if (pdle ===player)  {
+				this.winningColors("player");
+				score.player++;
+			}
+			else score.computer++; this.winningColors("computer");
+
+			if ((score.player || score.computer) >= 21) {
+				document.getElementById('winDiv').style.display = 'block';
+				document.getElementById('winText').textContent = (score.player == 21 ? "You" : "Computer") + "Wins by" + Math.abs(score.computer - score.player);
+				window.location.reload();
+		}
 
 			this.serve(pdle===player ? 1 : -1);
 		}
@@ -327,7 +405,8 @@ ball = {
 	 * Draw the ball to the canvas
 	 */
 	draw: function() {
-		ctx.fillRect(this.x, this.y, this.side, this.side);
+		ctx.arc(this.x,this.y,this.side * 4,0,Math.PI,true);
+		// ctx.fillRect(this.x, this.y, this.side, this.side);
 		var positions = this.positions;
 		var numPoints = this.numPoints;
 		// console.log(positions.length);
@@ -336,7 +415,7 @@ ball = {
 			ctx.strokeStyle = '#55D3FE';
 			ctx.lineJoin = "round";
 			for(var i = 1; i < numPoints-2; i++){
-				ctx.lineWidth = numPoints - (i%numPoints);
+				ctx.lineWidth = (numPoints - (i%numPoints)) * 2;
 				ctx.beginPath();
 				ctx.moveTo(positions[i].x, positions[i].y);
 				ctx.lineTo(positions[i-1].x, positions[i-1].y);
@@ -398,11 +477,14 @@ function main() {
  * Initatite game objects and set start positions
  */
 function init() {
+
 	player.x = player.width;
 	player.y = (HEIGHT - player.height)/2;
 	ai.x = WIDTH - (player.width + ai.width);
 	ai.y = (HEIGHT - ai.height)/2;
 	ball.serve(1);
+	ball.initHueColors();
+
 }
 /**
  * Update all game objects
