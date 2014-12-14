@@ -62,12 +62,7 @@
     </style>
   </head>
   <body>
-  	<div id="x"></div>
-  	<div id="y"></div>
-  	<div id="z"></div>
-  </body>
-  <body>
-
+  	
   	<div class = "scoreContainer">
   		<div class = "Score" id = "playerScore">
   		</div>
@@ -76,7 +71,9 @@
   		<div class = "Score" id = "computerScore">
   		</div>  	
   	</div>
-
+	<div id="x"></div>
+  	<div id="y"></div>
+  	<div id="z"></div>
 	<style>
 	canvas {
 		display: block;
@@ -95,12 +92,15 @@ function map(num,rang1Start,rang1End,rang2Start,rang2End) {
 	var output = rang2Start + (rang2End - rang2Start) * (num - rang1Start) / (rang1End - rang1Start);
     return output;
 };
-var
 
-function scalar(x,y){
+var Scalar = function(x,y){
 	this.x = x;
 	this.y = y;
-}
+};
+
+
+
+var
 /**
  * Constants
  */
@@ -187,7 +187,7 @@ ai = {
  */
 ball = {
 	positions:[],
-	numPoints: 30,
+	numPoints: 10,
 	x:   null,
 	y:   null,
 	vel: null,
@@ -217,9 +217,10 @@ ball = {
 	 * Update the ball position and keep it within the canvas
 	 */
 	update: function() {
-		positions.unshift(new scalar(this.x,this.y))
-		if (positions.length > this.numPoints) positions.pop();
-		
+		var positions = this.positions;
+		if (positions.length == this.numPoints) positions.pop();
+		else positions.unshift(new Scalar(this.x,this.y))
+		console.log(positions[0].x);
 
 		// update position with current velocity
 		this.x += this.vel.x;
@@ -268,9 +269,25 @@ ball = {
 	 */
 	draw: function() {
 		ctx.fillRect(this.x, this.y, this.side, this.side);
-		// for(var i = 0; i < this.numPoints; i++){
-		// 	ctx.
-		// }
+		var positions = this.positions;
+		var numPoints = this.numPoints;
+		// console.log(positions.length);
+		if(positions.length == numPoints ){
+			// console.log('hit');
+			ctx.strokeStyle = '#55D3FE';
+			ctx.lineJoin = "round";
+			for(var i = 1; i < numPoints-2; i++){
+				ctx.lineWidth = numPoints - (i%numPoints);
+				ctx.beginPath();
+				ctx.moveTo(positions[i].x, positions[i].y);
+				ctx.lineTo(positions[i-1].x, positions[i-1].y);
+				ctx.closePath();
+								ctx.stroke();
+
+
+			}    
+
+		}
 	}
 };
 
