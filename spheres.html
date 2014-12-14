@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<style>
+body {
+	margin: 0px;
+	padding: 0px;
+}
+</style>
+</head>
+<body>
+	<div id="container"></div>
+	<script src="./three.min.js"></script>
+	<script defer="defer">
+	// renderer
+	var renderer = new THREE.WebGLRenderer();
+	renderer.setSize(window.innerWidth, window.innerHeight);
+	document.body.appendChild(renderer.domElement);
+
+	// camera
+	var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
+	camera.position.z = 200;
+
+	// scene
+	var scene = new THREE.Scene();
+
+	// sphere
+	// the first argument of THREE.SphereGeometry is the radius, the second argument is
+	// the segmentsWidth, and the third argument is the segmentsHeight.  Increasing the
+	// segmentsWidth and segmentsHeight will yield a more perfect circle, but will degrade
+	// rendering performance
+	function genSphere(dest){
+		var sphere = new THREE.Mesh(new THREE.SphereGeometry(10, 100, 100), new THREE.MeshNormalMaterial());
+		dest.overdraw = true;
+		dest.add(sphere);
+	}
+
+	genSphere(scene);
+
+	renderer.render(scene, camera);
+	</script>
+</body>
+</html>
