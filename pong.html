@@ -5,7 +5,9 @@
 	<title>Pong</title>
 	<script src="https://cdn.socket.io/socket.io-1.2.1.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="./hue.js"></script>
+    <script src="./please.js"></script>
+    <script src="./colz.min.js"></script>
+
 	<!-- Basic styling, centering the canvas -->
 	<script type="text/javascript">
     	var socket = io('http://127.0.0.1:9000');
@@ -353,6 +355,7 @@ function draw() {
 	ctx.restore();
 }
 
+
 // Hackathonukah default ip 192.168.1.134
 // Change Philip Hue Color
 var changeHueColor = function(ip, lightNumber, sat, bri, hue) {
@@ -361,6 +364,20 @@ var changeHueColor = function(ip, lightNumber, sat, bri, hue) {
   xhr.open("PUT", "http://" + ip + "/api/newdeveloper/lights/" + lightNumber + "/state", true);
   xhr.send(JSON.stringify({on: true, sat: sat, bri : bri, hue :hue }));
 };
+
+
+
+var randomHue = function() {
+	var colors = Please.make_color({colors_returned: 3 });
+	for(var c = 0; c < colors.length; c++) {
+		var thisColor = new colz.Color(colors[c]);
+		var sat = thisColor.s * 5;
+		var bri = thisColor.b * 2;
+		var hue = thisColor.h * 100;
+		changeHueColor("192.168.1.134", c + 1, sat, bri, hue);
+	}
+}
+
 
 
 // start and run the game
