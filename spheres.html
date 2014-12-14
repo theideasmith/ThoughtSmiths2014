@@ -7,11 +7,27 @@ body {
 	padding: 0px;
 }
 </style>
+	<script src="https://cdn.socket.io/socket.io-1.2.1.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="./please.js"></script>
+	<script src="./colz.min.js"></script>
 </head>
 <body>
 	<div id="container"></div>
 	<script src="./three.min.js"></script>
-	<script defer="defer">
+	<script type = 'text/javascript'>
+
+var scalar = function(x,y,z){
+		this.x = 0;
+		this.y = 0;
+		this.z = 0;
+};
+
+function isFuzzyFrom(num, dist, fromThis) {
+	returned Math.abs(num - fromThis) <= dist ? true : false;
+	return returned;
+}
+
 	// renderer
 	var renderer = new THREE.WebGLRenderer();
 	renderer.setSize(window.innerWidth, window.innerHeight);
@@ -30,15 +46,52 @@ body {
 	// segmentsWidth and segmentsHeight will yield a more perfect circle, but will degrade
 	// rendering performance
 
+	function capture(position){
+
+	};
+
+
+	var Sphere = function(dest, radius, dx,dy,dz){
+		this.pos = new Scalar(dx,dy,dz);
+		var dirX = isFuzzyFrom(dx, 30, 0) ? 1 : -1;
+		var dirY = isFuzzyFrom(dy, 30, 0) ? 1 : -1;
+
+		this.vel = new Scalar(Math.random()*window.innerWidth,Math.random()*window.innerWidth,Math.random()* 200) ;
+		this.init = function (dest, dx,dy,dz){
+			var sphere = new THREE.Mesh(new THREE.SphereGeometry(, 100, 100), new THREE.MeshNormalMaterial());
+			dest.overdraw = true;
+			sphere.position.set(dx,dy,dz);
+			dest.add(sphere);
+			return sphere;
+		};
+
+		this.radius = radius;
+		this.update = function(){
+			this.
+		};
+
+		this.draw = function(){
+
+		};
+	}
 
 	//function genSphere(dest){
-	function genSphere(dest, dx,dy,dz){
-		var sphere = new THREE.Mesh(new THREE.SphereGeometry(10, 100, 100), new THREE.MeshNormalMaterial());
-		dest.overdraw = true;
-		sphere.position.set(dx,dy,dz);
-		dest.add(sphere);
-		return sphere
-	}
+
+	/*
+	* The Socket connection being initi;alized here.
+	*/
+	var socket = io('http://127.0.0.1:9000');
+
+	socket.on('imu', function(data) {
+		scalar.x = data.gyroscope.x;
+		scalar.y = data.gyroscope.y;
+		scalar.z = data.gyroscope.z;
+		player.deltaY = desY;
+	});
+
+socket.on('fist', function(data){
+		console.log('You made a fist');
+});
 
 	/*var sphere = function(sphere){
 		this.sphere = sphere;
@@ -48,7 +101,7 @@ body {
 	}*/
 
 		sphere0 = genSphere(scene,5,20,0);
-		sphere0.position.set(20,-40,20);
+		sphere0.position.set(0,0,0);
 		//console.log(sphere.position.x);
 		//for (i = 0 ; i < 100; i++)
 

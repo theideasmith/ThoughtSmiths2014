@@ -1,5 +1,9 @@
 var Myo = require("Myo");
 var io  = require('socket.io')(9000);
+
+var play1 = 12345;
+var play2 = 678910;
+
 var controller = Myo.create();
 
 register('connect');
@@ -15,10 +19,6 @@ io.on('error', function(data) {
 	console.log(data);
 });
 
-
-io.on('connect', function(socket) {
-	io.on
-})
 
 
 function register(name) {
