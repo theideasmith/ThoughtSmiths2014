@@ -3,8 +3,48 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Pong</title>
+	<script src="https://cdn.socket.io/socket.io-1.2.1.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 	<!-- Basic styling, centering the canvas -->
+	<script type="text/javascript">
+    	var socket = io('http://127.0.0.1:9000');
+
+    	socket.on('imu', function(data) {
+    		$('#x').css('width', width(data.orientation.x));
+    		$('#y').css('width', width(data.orientation.y));
+    		$('#z').css('width', width(data.orientation.z));
+    	});
+
+    	function width(x) {
+    		return ((x + 1) * 100) + 'px';
+    	}
+    </script>
+
+    <style>
+    	#x {
+    		background: #F00;
+    	}
+
+    	#y {
+    		background: #0F0;
+    	}
+
+    	#z {
+    		background: #00F;
+    	}
+
+
+    	#x, #y, #z {
+    		height: 50px;
+    	}
+    </style>
+  </head>
+  <body>
+  	<div id="x"></div>
+  	<div id="y"></div>
+  	<div id="z"></div>
+  </body>
 	<style>
 	canvas {
 		display: block;
@@ -19,6 +59,10 @@
 </head>
 <body>
 <script>
+function map(num,rang1Start,rang1End,rang2Start,rang2End) {
+	var output = rang2Start + (rang2End - rang2Start) * (num - rang1Start) / (rang1End - rang1Start);
+    return output;
+};
 var
 /**
  * Constants
@@ -34,12 +78,21 @@ DownArrow = 40,
 canvas,
 ctx,
 keystate,
+score = {
+	player:0,
+	computer:0,
+	update : function(){
+		
+	},
+}
 /**
  * The player paddle
  * 
  * @type {Object}
  */
 player = {
+	deltaX: 7,
+	deltaY: 7,
 	x: null,
 	y: null,
 	width:  20,
@@ -48,8 +101,9 @@ player = {
 	 * Update the position depending on pressed keys
 	 */
 	update: function() {
-		if (keystate[UpArrow]) this.y -= 7;
-		if (keystate[DownArrow]) this.y += 7;
+		// if (keystate[UpArrow]) this.y += this.deltaY;
+		// if (keystate[DownArrow]) this.y -= this.deltaY;
+		this.y += this.deltaY;
 		// keep the paddle inside of the canvas
 		this.y = Math.max(Math.min(this.y, HEIGHT - this.height), 0);
 	},
@@ -158,6 +212,10 @@ ball = {
 		// reset the ball when ball outside of the canvas in the
 		// x direction
 		if (0 > this.x+this.side || this.x > WIDTH) {
+			socket.emit('vibrate');
+			if (pdle ===player) score.player++;
+			else score.computer++;
+
 			this.serve(pdle===player ? 1 : -1);
 		}
 	},
@@ -168,6 +226,20 @@ ball = {
 		ctx.fillRect(this.x, this.y, this.side, this.side);
 	}
 };
+
+/*
+ * The Socket connection being initialized here. 
+*/
+var socket = io('http://127.0.0.1:9000');
+
+socket.on('imu', function(data) {
+	xPos = data.gyroscope.x;
+	yPos = data.gyroscope.y;
+	desY = yPos * -1 * 0.2;
+	player.deltaY = desY;
+});
+
+
 /**
  * Starts the game
  */

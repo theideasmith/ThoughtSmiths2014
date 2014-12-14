@@ -1,0 +1,43 @@
+<html>
+  <head>
+    <script src="https://cdn.socket.io/socket.io-1.2.1.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript">
+    	var socket = io('http://127.0.0.1:9000');
+
+    	socket.on('imu', function(data) {
+    		$('#x').css('width', width(data.orientation.x));
+    		$('#y').css('width', width(data.orientation.y));
+    		$('#z').css('width', width(data.orientation.z));
+    	});
+
+    	function width(x) {
+    		return ((x + 1) * 100) + 'px';
+    	}
+    </script>
+
+    <style>
+    	#x {
+    		background: #F00;
+    	}
+
+    	#y {
+    		background: #0F0;
+    	}
+
+    	#z {
+    		background: #00F;
+    	}
+
+
+    	#x, #y, #z {
+    		height: 50px;
+    	}
+    </style>
+  </head>
+  <body>
+  	<div id="x"></div>
+  	<div id="y"></div>
+  	<div id="z"></div>
+  </body>
+</html>
