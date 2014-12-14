@@ -22,6 +22,25 @@
     </script>
 
     <style>
+    	.scoreContainer {
+    		margin: 0 auto;
+    		width: 300px;
+    	}
+
+    	.Score{
+    		 font-family:"Helvetica";
+    		font-size:30px;	
+    		float: left;
+    	}
+
+    	#scoreDivider{
+    		height: 34px;
+    		width:5px;
+    		float:left;
+    		border-color:gray;
+    		border-radius:90;
+    	}
+
     	#x {
     		background: #F00;
     	}
@@ -45,6 +64,17 @@
   	<div id="y"></div>
   	<div id="z"></div>
   </body>
+  <body>
+
+  	<div class = "scoreContainer">
+  		<div class = "Score" id = "playerScore">
+  		</div>
+  		<div id = "scoreDivider">
+  		</div>
+  		<div class = "Score" id = "computerScore">
+  		</div>  	
+  	</div>
+
 	<style>
 	canvas {
 		display: block;
@@ -64,6 +94,11 @@ function map(num,rang1Start,rang1End,rang2Start,rang2End) {
     return output;
 };
 var
+
+function scalar(x,y){
+	this.x = x;
+	this.y = y;
+}
 /**
  * Constants
  */
@@ -82,7 +117,8 @@ score = {
 	player:0,
 	computer:0,
 	update : function(){
-		
+		document.getElementById("playerScore").textContent = this.player;
+		document.getElementById("computerScore").textContent = this.computer;
 	},
 }
 /**
@@ -148,6 +184,8 @@ ai = {
  * @type {Object}
  */
 ball = {
+	positions:[],
+	numPoints: 30,
 	x:   null,
 	y:   null,
 	vel: null,
@@ -177,6 +215,10 @@ ball = {
 	 * Update the ball position and keep it within the canvas
 	 */
 	update: function() {
+		positions.unshift(new scalar(this.x,this.y))
+		if (positions.length > this.numPoints) positions.pop();
+		
+
 		// update position with current velocity
 		this.x += this.vel.x;
 		this.y += this.vel.y;
@@ -224,6 +266,9 @@ ball = {
 	 */
 	draw: function() {
 		ctx.fillRect(this.x, this.y, this.side, this.side);
+		// for(var i = 0; i < this.numPoints; i++){
+		// 	ctx.
+		// }
 	}
 };
 
@@ -235,10 +280,10 @@ var socket = io('http://127.0.0.1:9000');
 socket.on('imu', function(data) {
 	xPos = data.gyroscope.x;
 	yPos = data.gyroscope.y;
-	desY = yPos * -1 * 0.2;
+	desY = yPos * 0.2;
 	player.deltaY = desY;
 });
-
+ 
 
 /**
  * Starts the game
@@ -284,6 +329,7 @@ function update() {
 	ball.update();
 	player.update();
 	ai.update();
+	score.update();
 }
 /**
  * Clear canvas and draw all game objects and net
