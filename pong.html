@@ -31,7 +31,7 @@
     	.scoreContainer {
 
     		margin: 20px auto;
-    		width: 62px;
+    		width: 80px;
     		text-align: center;
     	}
 
@@ -95,7 +95,7 @@
   </head>
   <body>
 
-  	<div class = "scoreContainer">
+  	<div class = "scoreContainer" id = "scoreContainer">
   		<div class = "Score" id = "playerScore">
   		</div>
   		<div id = "scoreDivider">
@@ -393,6 +393,7 @@ ball = {
 			else score.computer++; this.winningColors("computer");
 
 			if ((score.player || score.computer) >= 21) {
+				document.getElementById('scoreContainer').style.display = 'none';
 				document.getElementById('winDiv').style.display = 'block';
 				document.getElementById('winText').textContent = (score.player == 21 ? "You" : "Computer") + "Wins by" + Math.abs(score.computer - score.player);
 				window.location.reload();
@@ -445,7 +446,9 @@ socket.on('fist', function(data){
 	console.log('You made a fist');
 	paused = !paused;
 });
-
+socket.on('wave_out', function(data){
+	window.location.reload();
+});
 /**
  * Starts the game
  */

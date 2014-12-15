@@ -14,7 +14,7 @@ register('imu');
 register('lock');
 register('unlock');
 register('fist');
-
+register('wave_out');
 io.on('error', function(data) {
 	console.log(data);
 });
